@@ -4,19 +4,22 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-DEVICE_PATH := device/askey/deadpool
+DEVICE_PATH := device/khadas/kvim1s
 
 ## Bluetooth
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth/include
-BOARD_CUSTOM_BT_CONFIG := $(DEVICE_PATH)/bluetooth/vnd_deadpool.txt
+BOARD_CUSTOM_BT_CONFIG := $(DEVICE_PATH)/bluetooth/vnd_kvim1s.txt
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 
 ## Bootloader
-TARGET_BOOTLOADER_BOARD_NAME := deadpool
+TARGET_BOOTLOADER_BOARD_NAME := kvim1s
 
 ## DTB
-TARGET_DTB_NAME := g12a_s905y2_deadpool
+TARGET_DTB_NAME := kvim1s
+TARGET_DTBO_NAME := android_overlay_dt
+
+#TARGET_KERNEL_CONFIG := meson64_gki_module_config
 
 ## Partitions
 BOARD_SUPER_PARTITION_SIZE := 2084569088
@@ -35,7 +38,7 @@ WIFI_DRIVER_FW_PATH_PARAM := "/sys/module/dhd/parameters/firmware_path"
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 
 ## Include the common tree BoardConfig makefile
-include device/amlogic/g12-common/BoardConfigCommon.mk
+include device/amlogic/ne-common/BoardConfigCommon.mk
 
 ## Include the proprietary BoardConfig makefile
-include vendor/askey/deadpool/BoardConfigVendor.mk
+include vendor/khadas/kvim1s/BoardConfigVendor.mk
