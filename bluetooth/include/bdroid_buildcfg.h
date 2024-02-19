@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2021 The LineageOS Project
+* Copyright (C) 2023 The LineageOS Project
 *
 * SPDX-License-Identifier: Apache-2.0
 */
@@ -7,7 +7,7 @@
 #ifndef _BDROID_BUILDCFG_H
 #define _BDROID_BUILDCFG_H
 
-#define BTM_DEF_LOCAL_NAME "ADT-3"
+#define BTM_DEF_LOCAL_NAME "Khadas VIM1S"
 
 #define BLE_VND_INCLUDED TRUE
 
