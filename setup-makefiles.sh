@@ -9,8 +9,8 @@
 set -e
 
 export DEVICE=kvim1s
-export DEVICE_COMMON=g12-common
+export DEVICE_COMMON=ne-common
+export VENDOR=khadas
 export VENDOR_COMMON=amlogic
-export VENDOR_DEVICE=khadas
 
 "./../../${VENDOR_COMMON}/${DEVICE_COMMON}/setup-makefiles.sh" "$@"
