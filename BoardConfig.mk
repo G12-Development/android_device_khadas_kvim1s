@@ -19,7 +19,8 @@ TARGET_BOOTLOADER_BOARD_NAME := kvim1s
 TARGET_DTB_NAME := kvim1s
 TARGET_DTBO_NAME := android_overlay_dt
 
-#TARGET_KERNEL_CONFIG := meson64_gki_module_config
+## Kernel
+TARGET_KERNEL_CONFIG := lineage_kvim1s_defconfig
 
 ## Partitions
 BOARD_SUPER_PARTITION_SIZE := 2084569088
