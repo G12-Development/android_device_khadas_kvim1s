@@ -27,7 +27,8 @@ PRODUCT_MODEL := VIM1S
 PRODUCT_NAME := lineage_kvim1s
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRODUCT_NAME=adt3 \
-    PRIVATE_BUILD_DESC="adt3-user 13 TTT1.230205.001 9565391 release-keys"
-
-BUILD_FINGERPRINT := ADT-3/adt3/adt3:13/TTT1.230205.001/9565391:user/release-keys
+    BuildDesc="adt3-user 13 TTT1.230205.001 9565391 release-keys" \
+    BuildFingerprint=ADT-3/adt3/adt3:13/TTT1.230205.001/9565391:user/release-keys \
+    DeviceProduct=adt3 \
+    SystemDevice=kvim1s \
+    SystemName=kvim1s
