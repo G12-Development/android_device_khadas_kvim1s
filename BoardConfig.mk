@@ -22,6 +22,10 @@ TARGET_DTBO_NAME := android_overlay_dt
 ## Kernel
 TARGET_KERNEL_CONFIG := lineage_kvim1s_defconfig
 
+## Kernel modules
+TARGET_KERNEL_EXT_MODULES := \
+    dhd-driver/bcmdhd.101.10.361.x
+
 ## Partitions
 BOARD_SUPER_PARTITION_SIZE := 2084569088
 
