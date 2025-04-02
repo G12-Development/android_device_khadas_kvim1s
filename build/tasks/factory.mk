@@ -47,12 +47,10 @@ NEEDED_IMAGES := \
 
 $(INSTALLED_AML_INSTALL_PACKAGE_TARGET): $(addprefix $(PRODUCT_OUT)/,$(INSTALL_IMAGES)) $(ACP) $(AML_IMAGE_TOOL)
 	$(hide) mkdir -p $(PRODUCT_INSTALL_OUT)
-ifneq ("$(wildcard $(FACTORY_PATH)/bootfiles/bootloader.img)","")
-	$(hide) $(call aml-copy-install-file, $(FACTORY_PATH)/bootfiles/bootloader.img, u-boot.bin)
-else ifeq ($(WITH_CONSOLE_BL),true)
+ifeq ($(WITH_CONSOLE_BL),true)
 	$(hide) $(call aml-copy-install-file, $(FACTORY_PATH)/bootfiles/bootloader-console.img, u-boot.bin)
 else
-	$(error "no bootloader.img found in $(FACTORY_PATH)/bootfiles")
+	$(hide) $(call aml-copy-install-file, $(FACTORY_PATH)/bootfiles/bootloader.img, u-boot.bin)
 endif
 	$(hide) $(call aml-copy-install-file, $(PRODUCT_OUT)/logo.img)
 	$(hide) $(call aml-copy-install-file, $(FACTORY_PATH)/aml_sdc_burn.ini)
@@ -84,31 +82,22 @@ INSTALLED_RADIOIMAGE_TARGET += $(INSTALLED_AML_INSTALL_PACKAGE_TARGET)
 
 $(INSTALLED_AML_UPGRADE_PACKAGE_TARGET): $(addprefix $(PRODUCT_OUT)/,$(UPGRADE_IMAGES)) $(ACP) $(AML_IMAGE_TOOL)
 	$(hide) mkdir -p $(PRODUCT_UPGRADE_OUT)
-#ifneq ("$(wildcard $(FACTORY_PATH)/u-boot.bin.usb.signed)","")
-	$(hide) $(call aml-symlink-file, $(FACTORY_PATH)/DDR.USB)
-	$(hide) $(call aml-symlink-file, $(FACTORY_PATH)/aml_sdc_burn.UBOOT)
-	$(hide) $(call aml-symlink-file, $(FACTORY_PATH)/bootloader.img)
-	$(hide) $(call aml-symlink-file, $(FACTORY_PATH)/odm_ext_a.PARTITION)
-	$(hide) $(call aml-symlink-file, $(PRODUCT_OUT)/oem_a.PARTITION)
-#else ifneq ("$(wildcard vendor/khadas/kvim1s/radio/bootloader.img)","")
-#	$(hide) $(call aml-symlink-file, vendor/khadas/kvim1s/radio/bootloader.img, u-boot.bin)
-#else
-#	$(error "no u-boot.bin found in $(FACTORY_PATH)")
-#endif
-	$(hide) $(call aml-symlink-file, $(PRODUCT_OUT)/logo.img)
-	$(hide) $(call aml-symlink-file, $(FACTORY_PATH)/aml_sdc_burn.ini)
-	$(hide) $(call aml-symlink-file, $(FACTORY_PATH)/usb_flow.aml)
-	$(hide) $(call aml-symlink-file, $(FACTORY_PATH)/image.cfg)
-	$(hide) $(call aml-symlink-file, $(FACTORY_PATH)/platform.conf)
-	$(hide) $(call aml-symlink-file, $(PRODUCT_OUT)/boot.img)
-	$(hide) $(call aml-symlink-file, $(PRODUCT_OUT)/recovery.img)
-	$(hide) $(call aml-symlink-file, $(PRODUCT_OUT)/dtb.PARTITION)
-	$(hide) $(call aml-symlink-file, $(PRODUCT_OUT)/dtbo.img)
-	$(hide) $(call aml-symlink-file, $(PRODUCT_OUT)/super.img)
-	$(hide) $(call aml-symlink-file, $(PRODUCT_OUT)/vbmeta.img)
-	$(hide) $(call aml-symlink-file, $(PRODUCT_OUT)/vbmeta_system.img)
-	$(hide) $(call aml-symlink-file, $(PRODUCT_OUT)/vendor_boot.img)
-	$(hide) $(AML_IMAGE_TOOL) -r $(PACKAGE_CONFIG_FILE) $(PRODUCT_UPGRADE_OUT)/ $@
+ifeq ($(WITH_CONSOLE_BL),true)
+	$(hide) $(call aml-copy-install-file, $(FACTORY_PATH)/bootfiles/bootloader-console.img, u-boot.bin)
+else
+	$(hide) $(call aml-copy-install-file, $(FACTORY_PATH)/bootfiles/bootloader.img, u-boot.bin)
+endif
+	$(hide) $(call aml-copy-upgrade-file, $(PRODUCT_OUT)/logo.img)
+	$(hide) $(call aml-copy-upgrade-file, $(FACTORY_PATH)/aml_sdc_burn.ini)
+	$(hide) $(call aml-copy-upgrade-file, $(FACTORY_PATH)/image_upgrade.cfg, image.cfg)
+	$(hide) $(call aml-copy-upgrade-file, $(FACTORY_PATH)/platform.conf)
+	$(hide) $(call aml-copy-upgrade-file, $(PRODUCT_OUT)/boot.img)
+	$(hide) $(call aml-copy-upgrade-file, $(PRODUCT_OUT)/recovery.img)
+	$(hide) $(call aml-copy-upgrade-file, $(INSTALLED_2NDBOOTLOADER_TARGET), dtb.img)
+	$(hide) $(call aml-copy-upgrade-file, $(PRODUCT_OUT)/dtbo.img)
+	$(hide) $(call aml-copy-upgrade-file, $(PRODUCT_OUT)/super.img)
+	$(hide) $(call aml-copy-upgrade-file, $(PRODUCT_OUT)/vbmeta.img)
+	$(hide) $(AML_IMAGE_TOOL) -r  $(PRODUCT_UPGRADE_OUT)/image.cfg $(PRODUCT_UPGRADE_OUT)/ $@
 	$(hide) rm -rf $(PRODUCT_UPGRADE_OUT)
 	$(hide) echo " $@ created"
 
